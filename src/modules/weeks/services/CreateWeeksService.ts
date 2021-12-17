@@ -7,10 +7,16 @@ interface IResquest {
   name: string;
   start: string;
   end: string;
+  physical_plan_id: string;
 }
 
 class CreateWeeksService {
-  public async execute({ start, end, name }: IResquest): Promise<Weeks> {
+  public async execute({
+    start,
+    end,
+    name,
+    physical_plan_id,
+  }: IResquest): Promise<Weeks> {
     const weeksRepository = getCustomRepository(WeeksRepository);
 
     const weeksExist = await weeksRepository.findOne({
@@ -27,6 +33,7 @@ class CreateWeeksService {
       name,
       start,
       end,
+      physical_plan_id,
     });
 
     await weeksRepository.save(weeks);

@@ -6,7 +6,12 @@ class ListSessionsService {
   public async execute(): Promise<Session[] | undefined> {
     const sessionsRepository = getCustomRepository(SessionsRepository);
 
-    const sessions = sessionsRepository.find();
+    const sessions = sessionsRepository.find({
+      relations: ['week'],
+      order: {
+        name: 'ASC',
+      },
+    });
 
     return sessions;
   }

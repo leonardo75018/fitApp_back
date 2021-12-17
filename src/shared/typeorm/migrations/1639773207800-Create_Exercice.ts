@@ -1,10 +1,12 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { tr } from "date-fns/locale";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateExerciceSession1639599943165 implements MigrationInterface {
+export class CreateExercice1639773207800 implements MigrationInterface {
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'exercice_session',
+        name: 'exercices',
         columns: [
           {
             name: 'id',
@@ -18,12 +20,13 @@ export class CreateExerciceSession1639599943165 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'repetitions',
+            name: 'videoUrl',
             type: 'varchar',
           },
           {
-            name: 'intensity',
-            type: 'varchar',
+            name: 'category_id',
+            type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -36,9 +39,19 @@ export class CreateExerciceSession1639599943165 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'fk_category_id',
+            columnNames: ['category_id'],
+            referencedTableName: 'category',
+            referencedColumnNames: ['id'],
+          },
+        ],
       }),
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> { }
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('exercices');
+  }
 }

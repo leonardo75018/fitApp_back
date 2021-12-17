@@ -1,7 +1,10 @@
+import PhysicalPlan from '../../../physicalPlan/typeorm/entities/PhysicalPlan';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,6 +22,13 @@ class Week {
 
   @Column()
   end: string;
+
+  @Column()
+  physical_plan_id: string;
+
+  @OneToOne(() => PhysicalPlan)
+  @JoinColumn({ name: 'physical_plan_id' })
+  physical_plan: PhysicalPlan;
 
   @CreateDateColumn()
   created_at: Date;

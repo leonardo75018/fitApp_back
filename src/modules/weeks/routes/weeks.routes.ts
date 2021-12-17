@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
-import WeeksController from '../controllers/WeeksServiceController';
+import WeeksController from '../controllers/WeeksController';
 
 const weeksRoute = Router();
 const weeksCrontroller = new WeeksController();
@@ -19,6 +19,17 @@ weeksRoute.get(
   weeksCrontroller.show,
 );
 
+weeksRoute.get(
+  '/physical/:physical_plan_id',
+  isAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      physical_plan_id: Joi.string().uuid().required(),
+    },
+  }),
+  weeksCrontroller.listByPhysical,
+);
+
 weeksRoute.post(
   '/',
   isAuthenticated,
@@ -27,6 +38,7 @@ weeksRoute.post(
       name: Joi.string().required(),
       start: Joi.date().required(),
       end: Joi.date().required(),
+      physical_plan_id: Joi.string().uuid().required(),
     },
   }),
   weeksCrontroller.create,

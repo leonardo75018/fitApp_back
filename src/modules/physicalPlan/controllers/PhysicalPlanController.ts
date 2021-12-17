@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CreatePhysicalPlanService from '../services/CreatePhysicalPlanService';
 import DeletePhysicalPlanService from '../services/DeletePhysicalPlanService';
 import ListPhysicalPlansService from '../services/ListPhysicalPlanService';
+import ListUserPhysicalPlansService from '../services/ListPhysicalPlanByUserService';
 import ShowPhysicalPlanService from '../services/ShowPhysicalPlanService';
 import UpdatePhysicalPlanService from '../services/UpdatePhysicalPlanService';
 
@@ -11,6 +12,16 @@ class PhysicalPlanController {
 
     const physicalPlans = await listPhysicalPlan.execute();
     return response.json(physicalPlans);
+  }
+  public async listUserPhysicalPlan(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { user_id } = request.params;
+    const listUserPhysicalPlan = new ListUserPhysicalPlansService();
+
+    const userPhysicalPlans = await listUserPhysicalPlan.execute({ user_id });
+    return response.json(userPhysicalPlans);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -24,11 +35,16 @@ class PhysicalPlanController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, start, end } = request.body;
+    const { name, start, end, user_Id } = request.body;
 
     const createPhysicalPlan = new CreatePhysicalPlanService();
 
-    const physicalPlan = await createPhysicalPlan.execute({ name, end, start });
+    const physicalPlan = await createPhysicalPlan.execute({
+      name,
+      end,
+      start,
+      user_Id,
+    });
 
     return response.json(physicalPlan);
   }

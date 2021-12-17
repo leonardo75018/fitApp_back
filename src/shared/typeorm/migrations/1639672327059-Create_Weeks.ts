@@ -1,6 +1,7 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateWeeks1639578445694 implements MigrationInterface {
+export class CreateWeeks1639672327059 implements MigrationInterface {
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -26,6 +27,10 @@ export class CreateWeeks1639578445694 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'physical_plan_id',
+            type: 'uuid',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -36,9 +41,19 @@ export class CreateWeeks1639578445694 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'fk_physical_plan_id',
+            columnNames: ['physical_plan_id'],
+            referencedTableName: 'physical_plan',
+            referencedColumnNames: ['id'],
+          },
+        ],
       }),
     );
   }
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('weeks');
+  }
 
-  public async down(queryRunner: QueryRunner): Promise<void> { }
 }

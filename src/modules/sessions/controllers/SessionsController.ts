@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import CreateSessionsService from '../services/CreateSessionsService';
-import DeleteSessionsService from '../services/DeleteWeeksService';
-import ListSessionsService from '../services/ListWeeksService';
-import ShowSessionService from '../services/ShowWeeksService';
-import UpdateSessionsService from '../services/UpdateWeekService';
+import DeleteSessionsService from '../services/DeleteSessionsService';
+import ListSessionsByweekService from '../services/ListSessionsByWeeksService';
+import ListSessionsService from '../services/ListSessionsService';
+import ShowSessionService from '../services/ShowSessionsService';
+import UpdateSessionsService from '../services/UpdateSessionsService';
 
 class SessionsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -23,12 +24,25 @@ class SessionsController {
     return response.json(session);
   }
 
+  public async listByWeek(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { week_id } = request.params;
+
+    const listSessionsByWeek = new ListSessionsByweekService();
+
+    const sessionsByweek = await listSessionsByWeek.execute({ week_id });
+
+    return response.json(sessionsByweek);
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, backDrop } = request.body;
+    const { name, backDrop, week_id } = request.body;
 
     const createSession = new CreateSessionsService();
 
-    const session = await createSession.execute({ name, backDrop });
+    const session = await createSession.execute({ name, backDrop, week_id });
 
     return response.json(session);
   }

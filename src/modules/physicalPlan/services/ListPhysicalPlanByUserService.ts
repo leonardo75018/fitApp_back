@@ -2,24 +2,31 @@ import { getCustomRepository } from 'typeorm';
 import PhysicalPlan from '../typeorm/entities/PhysicalPlan';
 import { PhysicalPlanRepository } from '../typeorm/repositories/PhysicalPlanRepository';
 
-class ListPhysicalPlansService {
-  public async execute(): Promise<PhysicalPlan[] | undefined> {
+interface IRequest {
+  user_id: string;
+}
+
+class ListUserPhysicalPlansService {
+  public async execute({
+    user_id,
+  }: IRequest): Promise<PhysicalPlan[] | undefined> {
     const physicalPlanRepository = getCustomRepository(PhysicalPlanRepository);
 
-    const physicalPlans = physicalPlanRepository.find({
+    const userPhysicalPlans = physicalPlanRepository.find({
       relations: ['user'],
+      where: {
+        user_Id: user_id,
+      },
       order: {
         name: 'ASC',
       },
     });
 
-    return physicalPlans;
+    return userPhysicalPlans;
   }
 }
 
-export default ListPhysicalPlansService;
-
-
+export default ListUserPhysicalPlansService;
 
 // const physicalPlans = physicalPlanRepository.find({
 //   relations: ['user'],

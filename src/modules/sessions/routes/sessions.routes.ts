@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
-import SessionsController from '../controllers/SessionsServiceController';
+import SessionsController from '../controllers/SessionsController';
 
 const sessionsRoute = Router();
 const sessionsCrontroller = new SessionsController();
@@ -19,6 +19,17 @@ sessionsRoute.get(
   sessionsCrontroller.show,
 );
 
+sessionsRoute.get(
+  '/week/:week_id',
+  isAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      week_id: Joi.string().uuid().required(),
+    },
+  }),
+  sessionsCrontroller.listByWeek,
+);
+
 sessionsRoute.post(
   '/',
   isAuthenticated,
@@ -26,6 +37,7 @@ sessionsRoute.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       backDrop: Joi.string().required(),
+      week_id: Joi.string().uuid().required(),
     },
   }),
   sessionsCrontroller.create,

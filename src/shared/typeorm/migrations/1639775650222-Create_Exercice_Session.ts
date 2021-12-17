@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUsers1639488720162 implements MigrationInterface {
+export class CreateExerciceSession1639775650222 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'exercice_session',
         columns: [
           {
             name: 'id',
@@ -14,30 +14,20 @@ export class CreateUsers1639488720162 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'firstName',
+            name: 'repetitions',
             type: 'varchar',
           },
           {
-            name: 'lastName',
+            name: 'intensity',
             type: 'varchar',
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isUnique: true,
+            name: 'sessions_id',
+            type: 'uuid',
           },
           {
-            name: 'password',
-            type: 'varchar',
-          },
-          {
-            name: 'avatar',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'role',
-            type: 'varchar',
+            name: 'exercices_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -50,11 +40,24 @@ export class CreateUsers1639488720162 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'fk_sessions_id',
+            columnNames: ['sessions_id'],
+            referencedTableName: 'sessions',
+            referencedColumnNames: ['id'],
+          },
+          {
+            name: 'fk_exercices_id',
+            columnNames: ['exercices_id'],
+            referencedTableName: 'exercices',
+            referencedColumnNames: ['id'],
+          },
+        ],
       }),
     );
   }
-
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('exercice_session');
   }
 }

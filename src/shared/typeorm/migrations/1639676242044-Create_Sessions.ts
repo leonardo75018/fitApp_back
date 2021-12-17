@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreatePhysicalPlan1639395393741 implements MigrationInterface {
+export class CreateSessions1639676242044 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'physicalPlan',
+        name: 'sessions',
         columns: [
           {
             name: 'id',
@@ -18,12 +18,12 @@ export class CreatePhysicalPlan1639395393741 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'start',
+            name: 'backDrop',
             type: 'varchar',
           },
           {
-            name: 'end',
-            type: 'varchar',
+            name: 'week_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -36,10 +36,19 @@ export class CreatePhysicalPlan1639395393741 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'fk_week_id',
+            columnNames: ['week_id'],
+            referencedTableName: 'weeks',
+            referencedColumnNames: ['id'],
+          },
+        ],
       }),
     );
   }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('physicalPlan');
+    await queryRunner.dropTable('sessions');
   }
 }

@@ -7,10 +7,16 @@ interface IResquest {
   name: string;
   start: string;
   end: string;
+  user_Id: string;
 }
 
 class CreatePhysicalPlanService {
-  public async execute({ start, end, name }: IResquest): Promise<PhysicalPlan> {
+  public async execute({
+    start,
+    end,
+    name,
+    user_Id,
+  }: IResquest): Promise<PhysicalPlan> {
     const physicalPlanRepository = getCustomRepository(PhysicalPlanRepository);
 
     const physicalPlanExist = await physicalPlanRepository.findOne({
@@ -27,6 +33,7 @@ class CreatePhysicalPlanService {
       name,
       start,
       end,
+      user_Id,
     });
 
     await physicalPlanRepository.save(physicalPlan);

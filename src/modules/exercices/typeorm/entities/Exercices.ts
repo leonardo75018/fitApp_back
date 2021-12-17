@@ -1,16 +1,13 @@
-import Week from '../../../weeks/typeorm/entities/Weeks';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('sessions')
-class Session {
+@Entity('exercices')
+class Exercice {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,14 +15,7 @@ class Session {
   name: string;
 
   @Column()
-  backDrop: string;
-
-  @Column()
-  week_id: string;
-
-  @OneToOne(() => Week)
-  @JoinColumn({ name: 'week_id' })
-  week: Week;
+  videoUrl: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +23,4 @@ class Session {
   @UpdateDateColumn()
   updated_at: Date;
 }
-export default Session;
+export default Exercice;

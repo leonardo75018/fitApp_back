@@ -1,12 +1,15 @@
+import User from '../../../users/typeorm/entities/User';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('physicalPlan')
+@Entity('physical_plan')
 class PhysicalPlan {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -19,6 +22,13 @@ class PhysicalPlan {
 
   @Column()
   end: string;
+
+  @Column()
+  user_Id: string;
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_Id' })
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;
