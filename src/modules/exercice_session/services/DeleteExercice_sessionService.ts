@@ -6,7 +6,7 @@ interface IRequest {
   id: string;
 }
 
-class DeleteExercice_sessionService {
+class DeleteExercice_session_Service {
   public async execute({ id }: IRequest): Promise<void> {
     const exercice_session_Repository = getCustomRepository(
       Exercice_session_Repository,
@@ -22,4 +22,4 @@ class DeleteExercice_sessionService {
   }
 }
 
-export default DeleteExercice_sessionService;
+export default DeleteExercice_session_Service;

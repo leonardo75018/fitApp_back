@@ -7,6 +7,7 @@ import weeksRoute from '@modules/weeks/routes/weeks.routes';
 import sessionsRoute from '@modules/sessions/routes/sessions.routes';
 import categoryRoute from '@modules/category/routes/category.routes';
 import exerciceRoute from '@modules/exercices/routes/exercice.routes';
+import exercice_sessionRoute from '@modules/exercice_session/routes/exerice_session.routes';
 
 const route = Router();
 
@@ -18,5 +19,6 @@ route.use('/weeks', weeksRoute);
 route.use('/sessions', sessionsRoute);
 route.use('/category', categoryRoute);
 route.use('/exercice', exerciceRoute);
+route.use('/exercicesession', exercice_sessionRoute);
 
 export default route;

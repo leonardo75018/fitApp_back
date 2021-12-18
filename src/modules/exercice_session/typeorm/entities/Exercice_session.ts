@@ -22,14 +22,14 @@ class Exercice_session {
   intensity: string;
 
   @Column()
-  session_id: string;
+  sessions_id: string;
 
   @OneToOne(() => Session)
   @JoinColumn({ name: 'sessions_id' })
   sessions: Session;
 
   @Column()
-  exercice_id: string;
+  exercices_id: string;
 
   @OneToOne(() => Exercice)
   @JoinColumn({ name: 'exercices_id' })

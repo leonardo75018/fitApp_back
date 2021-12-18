@@ -19,14 +19,30 @@ class CreatePhysicalPlanService {
   }: IResquest): Promise<PhysicalPlan> {
     const physicalPlanRepository = getCustomRepository(PhysicalPlanRepository);
 
+    function convertDate(date: any) {
+      const moonLanding = new Date(date);
+      const getMonth = moonLanding.getMonth();
+      const month = getMonth + 1;
+      return month;
+    }
+
     const physicalPlanExist = await physicalPlanRepository.findOne({
       where: {
         name,
       },
     });
 
+    const dateForNewPlan = convertDate(start);
+    const dateCurentyPlan = convertDate(physicalPlanExist?.start);
+
+    if (dateForNewPlan === dateCurentyPlan) {
+      throw new AppError(
+        `there is already a physical Plan for the month of ${dateForNewPlan} `,
+      );
+    }
+
     if (physicalPlanExist) {
-      throw new AppError('There is already one physicalPlan with this name');
+      throw new AppError('There is already one physical Plan with this name');
     }
 
     const physicalPlan = physicalPlanRepository.create({
