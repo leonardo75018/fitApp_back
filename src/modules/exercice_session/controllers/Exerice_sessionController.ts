@@ -11,6 +11,7 @@ class Exerice_sessionController {
     const listExercice_session = new ListExerice_session_Service();
 
     const exercices_session = await listExercice_session.execute();
+
     return response.json(exercices_session);
   }
   public async list_exercice_session_ById(
