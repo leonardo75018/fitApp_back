@@ -1,5 +1,5 @@
-import Exercice from '@modules/exercices/typeorm/entities/Exercices';
-import Session from '@modules/sessions/typeorm/entities/Session';
+import Exercice from '../../../exercices/typeorm/entities/Exercices';
+import Session from '../../..//sessions/typeorm/entities/Session';
 import {
   Column,
   CreateDateColumn,
