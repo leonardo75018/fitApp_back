@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import CreateExercice_session_Service from '../services/CreateExercice_session_Service';
-import DeleteExercice_session_Service from '../services/DeleteExercice_SessionService';
+import DeleteExercice_session_Service from '../services/DeleteExercice_session_Service';
 import ListExerice_session_ById_Service from '../services/ListExercices_session_ById_Service';
 import ListExerice_session_Service from '../services/ListExercices_session_Service';
-import ShowExercice_session_Service from '../services/ShowExercice_sessionService';
-import UpdateExercice_section_Service from '../services/UpdateExercice_sessionService';
+import ShowExercice_session_Service from '../services/ShowExercice_session_Service';
+import UpdateExercice_section_Service from '../services/UpdateExercice_session_Service';
 
 class Exerice_sessionController {
   public async index(request: Request, response: Response): Promise<Response> {
